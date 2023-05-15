@@ -70,3 +70,12 @@
 .bd-mode-toggle {
     z-index: 1500;
 }
+
+.showPasswordToggle {
+    transition: all;
+    cursor: pointer;
+}
+
+.showPasswordToggle:hover {
+    transform: scale(1.2);
+}

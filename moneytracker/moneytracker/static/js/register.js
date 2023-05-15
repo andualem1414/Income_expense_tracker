@@ -1,6 +1,7 @@
 const usernameField = document.querySelector("#usernameField");
 const feedbackArea = document.querySelector(".invalid-feedback");
 const usernameSuccess = document.querySelector(".usernameSuccess");
+submitBtn = document.querySelector(".submit-btn");
 
 usernameField.addEventListener("keyup", (e) => {
     const usernameVal = e.target.value;
@@ -22,9 +23,12 @@ usernameField.addEventListener("keyup", (e) => {
             .then((data) => {
                 usernameSuccess.style.display = "none";
                 if (data.username_error) {
+                    submitBtn.disabled = true;
                     usernameField.classList.add("is-invalid");
                     feedbackArea.style.display = "block";
                     feedbackArea.innerHTML = `<p>${data.username_error}</p>`;
+                } else {
+                    submitBtn.removeAttribute("disabled");
                 }
             });
     } else {
@@ -58,8 +62,11 @@ emailField.addEventListener("keyup", (e) => {
                 emailSuccess.style.display = "none";
                 if (data.email_error) {
                     emailField.classList.add("is-invalid");
-                    emailFeedbackArea.innerHTML = "<p>Email not correct </p>";
+                    emailFeedbackArea.innerHTML = `<p>${data.email_error}</p>`;
                     emailFeedbackArea.style.display = "block";
+                    submitBtn.disabled = true;
+                } else {
+                    submitBtn.removeAttribute("disabled");
                 }
             });
     } else {

@@ -15,7 +15,11 @@
                 <div class="card-title py-2">
                     <h4>Register for free account</h4>
                 </div>
-                <form action="" method="post">
+                <form action="{% url 'register' %}" method="post">
+                    {% csrf_token %}
+                    <!--break-->
+                    {% include "partials/_messages.html" %}
+
                     <div class="form-group">
                         <input
                             type="text"
@@ -23,6 +27,7 @@
                             placeholder="Username"
                             id="usernameField"
                             class="form-control form-control-sm"
+                            value="{{fieldValue.username }}"
                         />
                     </div>
                     <div class="invalid-feedback" style="display: none"></div>
@@ -34,6 +39,7 @@
                             placeholder="Email"
                             id="emailField"
                             class="form-control form-control-sm"
+                            value="{{fieldValue.email }}"
                         />
                     </div>
                     <p class="text-sm text-success emailSuccess"></p>
@@ -57,7 +63,7 @@
                     <input
                         type="submit"
                         value="Register"
-                        class="btn btn-block btn-primary"
+                        class="submit-btn btn btn-block btn-primary"
                     />
                 </form>
             </div>

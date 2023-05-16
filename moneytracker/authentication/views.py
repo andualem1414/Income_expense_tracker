@@ -1,10 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.views import View
 import json
 from django.http import JsonResponse
 from django.contrib.auth.models import User
 from validate_email import validate_email
-from django.contrib import messages
+from django.contrib import messages, auth
+from django.contrib.auth import authenticate
+
 
 
 # Create your views here.
@@ -37,8 +39,8 @@ class UsernameValidationView(View):
         return JsonResponse({'username_valid':True})
     
 
-    
 class RegistrationView(View):
+
     def get(self, request):
         return render(request, "authentication/register.html")
     
@@ -62,14 +64,44 @@ class RegistrationView(View):
                     return render(request, "authentication/register.html", context)
                 
                 # create user account
+                
                 user = User.objects.create_user(username=username,email=email)
                 user.set_password(password)
                 user.save()
-
+                
                 messages.success(request, "Account successfully created")
-                return render(request, "authentication/register.html")
+                return redirect("login")
 
 
         
        
         return render(request, "authentication/register.html")
+    
+
+class LoginView(View):
+    def get(self, request):
+        return render(request, "authentication/login.html")
+
+    def post(self, request):
+        username = request.POST["username"]
+        password = request.POST["password"]
+        print(username, password)
+        if username and password:
+            user = authenticate(username=username, password=password)
+            print(user)
+            if user:
+                auth.login(request, user)
+                messages.success(request, "Wellcome Home my G")
+                return redirect("expenses")
+            
+            messages.error(request, "Wrong credentials")
+            return render(request, "authentication/login.html")
+        
+        messages.error(request, "Please fill all fields")
+        return render(request, "authentication/login.html")
+    
+class LogoutView(View):
+    def post(self, request):
+        auth.logout(request)
+        messages.success(request, "You have been logged out")
+        return redirect("login")

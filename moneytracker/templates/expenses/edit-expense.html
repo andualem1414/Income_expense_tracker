@@ -15,14 +15,14 @@
                 <a href="{% url 'expenses' %}">Expenses</a>
             </li>
             <li class="breadcrumb-item active" aria-current="page">
-                Add Expenses
+                Edit Expenses
             </li>
         </ol>
     </nav>
     {% include "partials/_messages.html" %}
     <div class="card">
         <div class="card-body">
-            <form action="{% url 'add-expenses' %}" method="POST">
+            <form action="{% url 'edit-expense' values.id%}" method="POST">
                 {% csrf_token %}
                 <div class="form-group">
                     <label for="">Amount</label>
@@ -46,7 +46,7 @@
                     <label for="">Catagory</label>
                     <select class="form-control" name="catagory" id="">
                         {% for catagory in catagories %}
-                        <option name="catagory" value="{{catagory.name}}">
+                        <option {% if catagory.name == values.catagory%} selected {% endif %} name="catagory" value="{{catagory.name}}">
                             {{ catagory.name }}
                         </option>
                         {% endfor %}
@@ -56,11 +56,16 @@
                     <label for="">Date of Expense</label>
                     <input
                         type="date"
+                        value="{{values.date}}"
                         class="form-control form-control-sm"
                         name="expense_date"
                     />
                 </div>
-                <input type="submit" class="btn btn-primary btn-primary-sm" />
+                <input
+                    type="submit"
+                    class="btn btn-primary btn-primary-sm"
+                    value="Update"
+                />
             </form>
         </div>
     </div>

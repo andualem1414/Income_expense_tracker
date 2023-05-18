@@ -36,6 +36,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'expenses',
+    'income',
     "userpreferences",
     'django.contrib.admin',
     'django.contrib.auth',

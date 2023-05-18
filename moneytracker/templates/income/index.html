@@ -1,10 +1,7 @@
 {% extends 'base.html' %} {% load static %}
-
-<!-- break-->
-{% block title %} Home {% endblock title %}
-
-<!-- break-->
-
+<!--break-->
+{% block title %}Income{% endblock title %}
+<!--break-->
 {% block content %}
 
 <div class="container mt-4">
@@ -13,23 +10,23 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                        <a href="">Expenses</a>
+                        <a href="">Income</a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
-                        My Expenses
+                        My Income
                     </li>
                 </ol>
             </nav>
         </div>
         <div class="col-md-2">
-            <a href="{% url 'add-expenses' %}" class="btn btn-primary">
-                Add Expense</a
+            <a href="{% url 'add-income' %}" class="btn btn-primary">
+                Add Income</a
             >
         </div>
     </div>
     {% include 'partials/_messages.html' %}
     <div class="container">
-        {% if expenses.count %}
+        {% if income.count %}
         <div class="row">
             <div class="col-md-8"></div>
             <div class="col-md-4 pb-3">
@@ -46,31 +43,33 @@
                 <thead>
                     <tr>
                         <th>Amount[{{currency}}]</th>
-                        <th>Catagory</th>
+                        <th>Source</th>
                         <th>Description</th>
                         <th>Date</th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for expense in page_obj %}
+                    {% for income in page_obj %}
                     <tr>
-                        <td>{{expense.amount}}</td>
-                        <td>{{expense.catagory}}</td>
-                        <td>{{expense.description}}</td>
-                        <td>{{expense.date}}</td>
+                        <td>{{income.amount}}</td>
+                        <td>{{income.source}}</td>
+                        <td>{{income.description}}</td>
+                        <td>{{income.date}}</td>
 
                         <td>
+                            {% comment %}
                             <a
-                                href="{% url 'edit-expense' expense.id%}"
+                                href="{% url 'edit-income' income.id%}"
                                 class="btn btn-secondary btn-sm"
                                 >Edit</a
                             >
                             <a
-                                href="{% url 'delete-expense' expense.id%}"
+                                href="{% url 'delete-income' income.id%}"
                                 class="btn btn-danger btn-sm"
                                 >Delete</a
                             >
+                            {% endcomment %}
                         </td>
                     </tr>
 
@@ -136,5 +135,7 @@
         {% endif %}
     </div>
 </div>
-<script src="{% static 'js/searchExpense.js' %}"></script>
+
+<script src="{% static 'js/searchIncome.js' %}"></script>
+
 {% endblock content %}

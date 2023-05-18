@@ -71,14 +71,15 @@
             >
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <input
-                class="form-control form-control-dark w-100 rounded-0 border-0"
-                type="text"
-                placeholder="Search"
-                aria-label="Search"
-            />
-            <div class="navbar-nav">
+
+            <div
+                class="navbar-nav"
+                style="display: flex; flex-direction: row; align-items: center"
+            >
                 <div class="nav-item text-nowrap">
+                    <a class="nav-link" href="">({{request.user.username}})</a>
+                </div>
+                <div class="nav-item text-nowrap mt-3 ml-2">
                     <form action="{% url 'logout' %}" method="POST">
                         {% csrf_token %}
                         <input class="px-3" type="submit" value="Sign out" />

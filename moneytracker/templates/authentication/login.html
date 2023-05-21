@@ -40,10 +40,21 @@
                             class="form-control form-control-sm"
                         />
                     </div>
+                    <span class="pb-3"
+                        >Don't have account?
+                        <a href="{% url 'register' %}">Register</a></span
+                    >
+                    <br />
+                    <span class="pb-3"
+                        >Forget password?
+                        <a href="{% url 'reset-password' %}"
+                            >Reset Password</a
+                        ></span
+                    >
                     <input
                         type="submit"
                         value="Login"
-                        class="submit-btn btn btn-block btn-primary"
+                        class="submit-btn btn btn-block btn-primary mt-3"
                     />
                 </form>
             </div>

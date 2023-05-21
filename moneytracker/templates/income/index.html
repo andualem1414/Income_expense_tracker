@@ -24,9 +24,11 @@
             >
         </div>
     </div>
+
     {% include 'partials/_messages.html' %}
     <div class="container">
         {% if income.count %}
+
         <div class="row">
             <div class="col-md-8"></div>
             <div class="col-md-4 pb-3">
@@ -38,6 +40,7 @@
                 />
             </div>
         </div>
+
         <div class="app-table">
             <table class="table table-stripped table-hover">
                 <thead>
@@ -58,7 +61,6 @@
                         <td>{{income.date}}</td>
 
                         <td>
-                            {% comment %}
                             <a
                                 href="{% url 'edit-income' income.id%}"
                                 class="btn btn-secondary btn-sm"
@@ -69,7 +71,6 @@
                                 class="btn btn-danger btn-sm"
                                 >Delete</a
                             >
-                            {% endcomment %}
                         </td>
                     </tr>
 
@@ -92,6 +93,7 @@
                 <tbody class="table-body"></tbody>
             </table>
         </div>
+
         <div class="pagination-container">
             <div class="row">
                 <div class="col">

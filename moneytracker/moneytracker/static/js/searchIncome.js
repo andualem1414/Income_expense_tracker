@@ -11,7 +11,8 @@ searchField.addEventListener("keyup", (e) => {
 
     if (searchVal.trim().length > 0) {
         tbody.innerHTML = "";
-        fetch("/search-income", {
+
+        fetch("/income/search-income", {
             body: JSON.stringify({
                 searchText: searchVal,
             }),
@@ -24,6 +25,7 @@ searchField.addEventListener("keyup", (e) => {
                 appTable.style.display = "none";
                 pagination.style.display = "none";
                 tableoutput.style.display = "block";
+
                 if (data.length === 0) {
                     tableoutput.innerHTML = "<h4>No results found</h4>";
                 } else {
@@ -31,7 +33,7 @@ searchField.addEventListener("keyup", (e) => {
                         tbody.innerHTML += `
                         <tr>
                         <td>${element.amount}</td>
-                        <td>${element.souece}</td>
+                        <td>${element.source}</td>
                         <td>${element.description}</td>
                         <td>${element.date}</td>
     

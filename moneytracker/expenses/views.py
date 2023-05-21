@@ -1,3 +1,4 @@
+import datetime
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 
@@ -25,6 +26,7 @@ def search_expenses(request):
         data = expenses.values()
         
         return JsonResponse(list(data), safe=False)
+
 
 @login_required(login_url="/authentication/login")
 def index(request):
@@ -72,6 +74,7 @@ def add_expense(request):
 
         return redirect('expenses')
 
+
 def edit_expense(request, id):
     expense = Expense.objects.get(pk =id)
     catagories = Catagory.objects.all()
@@ -114,3 +117,26 @@ def delete_expense(request, id):
     expense.delete()
     messages.success(request, "Expenses Deleted Successfully")
     return redirect("expenses")
+
+
+def expense_catagory_summary(request):
+    today = datetime.date.today()
+    six_month_ago = today-datetime.timedelta(days=30*6)
+
+    expenses = Expense.objects.filter(date__gte=six_month_ago,date__lte=today, owner = request.user)
+
+    catagories = Catagory.objects.all()
+    expense_catagory_data = {}
+    for catagory in catagories:
+        expense_catagory_data[catagory.name] = 0
+
+        for expense in expenses:
+            if expense.catagory == catagory:
+                expense_catagory_data[catagory.name] += expense.amount
+
+    return JsonResponse({"expense_catagory_data": expense_catagory_data }, safe=False)
+    
+
+def  stats(request):
+    return render(request, "expense/stats.html")
+        

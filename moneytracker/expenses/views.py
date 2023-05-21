@@ -8,7 +8,8 @@ from .models import Catagory, Expense
 from django.contrib import messages
 from django.core.paginator import Paginator
 import json
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
+import csv
 
 # Create your views here.
 
@@ -123,7 +124,7 @@ def expense_catagory_summary(request):
     today = datetime.date.today()
     six_month_ago = today-datetime.timedelta(days=30*6)
 
-    expenses = Expense.objects.filter(date__gte=six_month_ago,date__lte=today, owner = request.user)
+    expenses = Expense.objects.filter(date__gte=six_month_ago, date__lte=today, owner=request.user)
 
     catagories = Catagory.objects.all()
     expense_catagory_data = {}
@@ -131,12 +132,26 @@ def expense_catagory_summary(request):
         expense_catagory_data[catagory.name] = 0
 
         for expense in expenses:
-            if expense.catagory == catagory:
+            if expense.catagory == catagory.name:
                 expense_catagory_data[catagory.name] += expense.amount
 
     return JsonResponse({"expense_catagory_data": expense_catagory_data }, safe=False)
     
 
 def  stats(request):
-    return render(request, "expense/stats.html")
+    return render(request, "expenses/stats.html")
         
+
+def export_csv(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] ="attachment; filename=Expenses" + str(datetime.datetime.now()) + ".csv"
+
+    writer = csv.writer(response)
+    writer.writerow(['Amount', 'Description', 'Catagory', 'Date'])
+
+    expenses = Expense.objects.filter(owner = request.user)
+
+    for expense in expenses:
+        writer.writerow([expense.amount, expense.description, expense.catagory, expense.date])
+
+    return response

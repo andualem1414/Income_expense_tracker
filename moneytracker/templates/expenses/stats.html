@@ -28,7 +28,13 @@
         </div>
     </div>
     {% include 'partials/_messages.html' %}
+    <div>
+        <canvas id="myChart" width="400" height="100"></canvas>
+    </div>
 </div>
-{% comment %}
-<script src="{% static 'js/searchExpense.js' %}"></script>
-{% endcomment %} {% endblock content %}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script src="{% static 'js/stats.js' %}"></script>
+
+{% endblock content %}
